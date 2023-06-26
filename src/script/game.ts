@@ -32,7 +32,8 @@ const createGame = ({
   showWalls: Ref<boolean>,
 }) => {
   const screen = 350;
-  const side = screen / 7;
+  const gridSize = 7;
+  const side = screen / gridSize;
 
   const ball: Tile = {
     x: 1,
@@ -88,10 +89,10 @@ const createGame = ({
   const redraw = () => {
     reset();
 
-    for (let y = 1; y <= 7; y++) {
+    for (let y = 1; y <= gridSize; y++) {
       if (!board[y]) continue;
 
-      for (let x = 1; x <= 7; x++) {
+      for (let x = 1; x <= gridSize; x++) {
         if (board[y][x]) {
           draw(board[y][x]);
         }
@@ -115,13 +116,14 @@ const createGame = ({
     const x = ball.x + xOffset;
     const y = ball.y + yOffset;
 
-    if (x <= 0 || x > 7 || y <= 0 || y > 7) {
+    if (x <= 0 || x > gridSize || y <= 0 || y > gridSize) {
       return false;
     }
 
     const tile = board[y]?.[x];
     if (tile) {
       if (tile.color === "red") {
+        points.value = Math.max(0, points.value - 1);
         return false;
       } else {
         points.value += Math.floor({yellow: 10, green: 5}[tile.color] - Math.log2(moves.value));
