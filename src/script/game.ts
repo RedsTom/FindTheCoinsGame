@@ -209,7 +209,7 @@ const createGame = ({
     ctx.fillStyle = "#2C3A47";
     ctx.fillRect(0, 0, screen, screen);
 
-    alert(`Tu as fini le jeu avec ${points} points ! GG !`);
+    alert(`You finished the game with ${points} points ! GG !`);
   }
 
   return {
