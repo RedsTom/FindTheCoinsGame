@@ -15,13 +15,15 @@ let showWalls: Ref<boolean> = ref(true);
 const movesElement = document.querySelector<HTMLSpanElement>("#moves") as HTMLSpanElement;
 let moves: Ref<number> = ref(0);
 
+const arrowButtons = ["left", "right", "up", "down"].map(dir => document.querySelector(`#${dir}`) as HTMLButtonElement);
+
 const game = createGame({
-  canvas, ctx, points, movesElement, level, levelElement, pointsElement, moves, showWalls
+  canvas, ctx, points, movesElement, level, levelElement, pointsElement, moves, showWalls, arrowButtons
 });
 
 window.addEventListener("keydown", event => {
 
-  const directions: {[key: string]: "top" | "left" | "bottom" | "right"} = {
+  const directions: { [key: string]: "top" | "left" | "bottom" | "right" } = {
     ArrowUp: "top",
     ArrowLeft: "left",
     ArrowDown: "bottom",
@@ -36,6 +38,14 @@ window.addEventListener("keydown", event => {
   }
 });
 
+arrowButtons.forEach(btn => btn.addEventListener("click", () => {
+  game.move({
+    left: "left",
+    right: "right",
+    up: "top",
+    down: "bottom",
+  }[btn.id] as "left" | "right" | "top" | "bottom");
+}));
 document.querySelector("#reset")?.addEventListener("click", () => {
   level.value = 0;
   points.value = 0;

@@ -8,12 +8,24 @@ interface Tile {
   type?: "ball" | "tile";
 }
 
-const createGame = ({canvas, ctx, pointsElement, points, levelElement, level, showWalls, movesElement, moves}: {
+const createGame = ({
+                      canvas,
+                      ctx,
+                      pointsElement,
+                      points,
+                      levelElement,
+                      level,
+                      showWalls,
+                      movesElement,
+                      moves,
+                      arrowButtons
+                    }: {
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
   pointsElement: HTMLSpanElement,
   levelElement: HTMLSpanElement,
   movesElement: HTMLSpanElement,
+  arrowButtons: HTMLButtonElement[],
   points: Ref<number>,
   level: Ref<number>,
   moves: Ref<number>,
@@ -87,6 +99,12 @@ const createGame = ({canvas, ctx, pointsElement, points, levelElement, level, sh
     }
 
     draw(ball);
+
+    if(showWalls.value) {
+      arrowButtons.forEach(button => button.disabled = true)
+    } else {
+      arrowButtons.forEach(button => button.disabled = false)
+    }
 
     pointsElement.textContent = "" + points.value;
     levelElement.textContent = "" + level.value;

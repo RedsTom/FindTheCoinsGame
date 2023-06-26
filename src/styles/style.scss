@@ -2,23 +2,23 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  
+
   font-family: sans-serif;
 }
 
 body {
   min-width: 100vw;
   max-width: 100vw;
-  
+
   min-height: 100vh;
   max-height: 100vh;
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   gap: 2rem;
- 
+
   background-color: #F8EFBA;
 }
 
@@ -31,7 +31,7 @@ canvas {
   display: flex;
   align-items: center;
   justify-content: center;
-  
+
   flex-direction: column;
 }
 
@@ -41,25 +41,68 @@ canvas {
 
 button {
   $bg: #2C3A47;
-  
+
   color: white;
   background-color: $bg;
-  
+
   border: none;
   outline: none;
-  
+
   padding: .75rem 1.5rem;
-  
+
   border-radius: .75rem;
-  
+
   font-size: 1rem;
-  
+
   transition: .25s;
-  
+
   &:hover {
     background-color: lighten($bg, 5%);
   }
+
   &:active {
     background-color: lighten($bg, 10%);
+  }
+
+  &:disabled {
+    cursor: default;
+    background-color: lighten($bg, 20%);
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  .mobile-controls {
+    display: none !important;
+  }
+}
+
+.mobile-controls {
+  display: grid;
+  grid-gap: .5rem;
+
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+        ". up ."
+        "left down right";
+
+  button {
+    font-size: 2rem;
+  }
+
+  #up {
+    grid-area: up;
+  }
+
+  #down {
+    grid-area: down;
+  }
+
+  #left {
+    grid-area: left;
+  }
+
+  #right {
+    grid-area: right;
   }
 }
