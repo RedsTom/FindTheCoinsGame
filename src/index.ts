@@ -30,7 +30,6 @@ window.addEventListener("keydown", event => {
     ArrowRight: "right",
   };
 
-  console.log(event.code);
   const direction = directions[event.key];
   if (direction) {
     event.preventDefault();

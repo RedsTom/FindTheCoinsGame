@@ -101,7 +101,7 @@ const createGame = ({
 
     draw(ball);
 
-    if(showWalls.value) {
+    if (showWalls.value) {
       arrowButtons.forEach(button => button.disabled = true)
     } else {
       arrowButtons.forEach(button => button.disabled = false)
