@@ -1,4 +1,6 @@
-# Jeu de cytcy06 remasterisé
+# FindTheCoinsGame
 
-A Pen created on CodePen.io. Original URL: [https://codepen.io/RedsTom/pen/yLQgvzX](https://codepen.io/RedsTom/pen/yLQgvzX).
+Plays with keyboard arrows.
 
+The goal of the game is to reach a colored tile
+Yellow tiles are worth more than green ones. 
