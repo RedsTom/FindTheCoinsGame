@@ -176,7 +176,7 @@ const createGame = ({canvas, ctx, pointsElement, points, levelElement, level, sh
       setTimeout(() => {
         showWalls.value = false;
         redraw();
-      }, 2000)
+      }, 3000)
     }
 
     loadLevel(levels[level.value - 1]);
