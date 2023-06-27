@@ -1,4 +1,4 @@
-import Ref from "./ref";
+import Ref, {ref} from "./ref";
 import generateMaze from "./maze";
 
 interface Tile {
@@ -18,7 +18,8 @@ const createGame = ({
                       showWalls,
                       movesElement,
                       moves,
-                      arrowButtons
+                      arrowButtons,
+                      helpButton,
                     }: {
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
@@ -26,6 +27,7 @@ const createGame = ({
   levelElement: HTMLSpanElement,
   movesElement: HTMLSpanElement,
   arrowButtons: HTMLButtonElement[],
+  helpButton: HTMLButtonElement,
   points: Ref<number>,
   level: Ref<number>,
   moves: Ref<number>,
@@ -106,8 +108,11 @@ const createGame = ({
       arrowButtons.forEach(button => button.disabled = false)
     }
 
+    helpButton.disabled = points.value < 3 || showWalls.value;
+
     pointsElement.textContent = "" + points.value;
     levelElement.textContent = "" + level.value;
+
     movesElement.textContent = "" + moves.value;
   }
 
@@ -123,6 +128,10 @@ const createGame = ({
     if (tile) {
       if (tile.color === "red") {
         points.value = Math.max(0, points.value - 1);
+        if(points.value <= 0) {
+          loadEnd();
+        }
+
         return false;
       } else {
         const pts = {yellow: 10, green: 5}[tile.color];
@@ -254,7 +263,13 @@ const createGame = ({
     ctx.fillStyle = "#2C3A47";
     ctx.fillRect(0, 0, screen, screen);
 
-    alert(`You finished the game with ${points} points ! GG !`);
+    if(window.confirm(`You finished the game with ${points} points ! GG !`)) {
+      reset();
+      loadNextLevel();
+    } else {
+      reset();
+      loadNextLevel();
+    }
   }
 
 
@@ -270,8 +285,12 @@ const createGame = ({
     }, 3000 + (Math.floor(level.value / 5) * 2000))
   }
 
+  const isHelpShown = () => {
+    return timeout !== undefined;
+  }
+
   return {
-    init, reset, offset, draw, redraw, checkCollisions, add, move, loadNextLevel, loadEnd, showHelp
+    init, reset, offset, draw, redraw, checkCollisions, add, move, loadNextLevel, loadEnd, showHelp, isHelpShown
   }
 }
 

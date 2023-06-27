@@ -6,7 +6,7 @@ const canvas = document.querySelector<HTMLCanvasElement>("#canvas") as HTMLCanva
 const ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
 
 const pointsElement = document.querySelector<HTMLSpanElement>("#points") as HTMLSpanElement;
-let points: Ref<number> = ref(0);
+let points: Ref<number> = ref(10);
 
 const levelElement = document.querySelector<HTMLSpanElement>("#level") as HTMLSpanElement;
 let level: Ref<number> = ref(0);
@@ -17,8 +17,10 @@ let moves: Ref<number> = ref(0);
 
 const arrowButtons = ["left", "right", "up", "down"].map(dir => document.querySelector(`#${dir}`) as HTMLButtonElement);
 
+const helpButton = document.querySelector<HTMLButtonElement>("#help") as HTMLButtonElement;
+
 const game = createGame({
-  canvas, ctx, points, movesElement, level, levelElement, pointsElement, moves, showWalls, arrowButtons
+  canvas, ctx, points, movesElement, level, levelElement, pointsElement, moves, showWalls, arrowButtons, helpButton
 });
 
 window.addEventListener("keydown", event => {
@@ -36,7 +38,6 @@ window.addEventListener("keydown", event => {
     game.move(direction);
   }
 });
-
 arrowButtons.forEach(btn => btn.addEventListener("click", () => {
   game.move({
     left: "left",
@@ -45,17 +46,26 @@ arrowButtons.forEach(btn => btn.addEventListener("click", () => {
     down: "bottom",
   }[btn.id] as "left" | "right" | "top" | "bottom");
 }));
+
 document.querySelector("#reset")?.addEventListener("click", () => {
-  level.value = 0;
-  points.value = 0;
-  moves.value = 0;
-  showWalls.value = true;
+  if (window.confirm("Are you sure you want to reset the game?")) {
+    level.value = 0;
+    points.value = 0;
+    moves.value = 0;
+    showWalls.value = true;
 
-  game.loadNextLevel();
+    game.loadNextLevel();
+  }
 });
+helpButton?.addEventListener("click", () => {
+  if (points.value < 3) return;
 
-document.querySelector("#help")?.addEventListener("click", () => {
-  points.value = Math.max(0, points.value - 3);
+  points.value -= 3;
+  if (points.value <= 0) {
+    game.loadEnd();
+    return;
+  }
+
   game.showHelp();
 })
 
