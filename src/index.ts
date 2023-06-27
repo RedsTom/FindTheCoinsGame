@@ -50,7 +50,7 @@ arrowButtons.forEach(btn => btn.addEventListener("click", () => {
 document.querySelector("#reset")?.addEventListener("click", () => {
   if (window.confirm("Are you sure you want to reset the game?")) {
     level.value = 0;
-    points.value = 0;
+    points.value = 10;
     moves.value = 0;
     showWalls.value = true;
 

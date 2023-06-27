@@ -1,4 +1,4 @@
-import Ref, {ref} from "./ref";
+import Ref from "./ref";
 import generateMaze from "./maze";
 
 interface Tile {
@@ -257,6 +257,8 @@ const createGame = ({
   const loadEnd = () => {
     ball.x = 0;
     ball.y = 0;
+
+    points.value = 10;
 
     redraw();
 
