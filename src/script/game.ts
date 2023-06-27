@@ -263,7 +263,7 @@ const createGame = ({
     ctx.fillStyle = "#2C3A47";
     ctx.fillRect(0, 0, screen, screen);
 
-    if(window.confirm(`You finished the game with ${points} points ! GG !`)) {
+    if(window.confirm(`Looks like your are dead ! ☠️`)) {
       reset();
       loadNextLevel();
     } else {
