@@ -125,9 +125,9 @@ const createGame = ({
         points.value = Math.max(0, points.value - 1);
         return false;
       } else {
-        const pts = { yellow: 10, green: 5 }[tile.color];
+        const pts = {yellow: 10, green: 5}[tile.color];
 
-        points.value += Math.floor(pts - Math.log2((moves.value * pts/10) + 1));
+        points.value += Math.floor(pts - Math.log2((moves.value * pts / 10) + 1));
         loadNextLevel();
 
         return false;
@@ -239,11 +239,7 @@ const createGame = ({
         }
       }
 
-      showWalls.value = true;
-      setTimeout(() => {
-        showWalls.value = false;
-        redraw();
-      }, 3000 + (Math.floor(level.value / 5) * 2000));
+      showHelp();
     }
 
     loadLevel(generateLevel());
@@ -261,8 +257,21 @@ const createGame = ({
     alert(`You finished the game with ${points} points ! GG !`);
   }
 
+
+  let timeout: NodeJS.Timeout | undefined = undefined;
+  const showHelp = () => {
+    showWalls.value = true;
+    redraw();
+
+    if (timeout) clearTimeout(timeout)
+    timeout = setTimeout(() => {
+      showWalls.value = false;
+      redraw();
+    }, 3000 + (Math.floor(level.value / 5) * 2000))
+  }
+
   return {
-    init, reset, offset, draw, redraw, checkCollisions, add, move, loadNextLevel, loadEnd
+    init, reset, offset, draw, redraw, checkCollisions, add, move, loadNextLevel, loadEnd, showHelp
   }
 }
 

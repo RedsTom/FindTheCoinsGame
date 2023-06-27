@@ -54,5 +54,10 @@ document.querySelector("#reset")?.addEventListener("click", () => {
   game.loadNextLevel();
 });
 
+document.querySelector("#help")?.addEventListener("click", () => {
+  points.value = Math.max(0, points.value - 3);
+  game.showHelp();
+})
+
 game.init();
 
