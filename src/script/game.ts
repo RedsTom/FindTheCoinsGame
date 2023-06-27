@@ -258,8 +258,7 @@ const createGame = ({
     ball.x = 0;
     ball.y = 0;
 
-    points.value = 10;
-
+    resetGame();
     redraw();
 
     ctx.fillStyle = "#2C3A47";
@@ -291,8 +290,17 @@ const createGame = ({
     return timeout !== undefined;
   }
 
+  const resetGame = () => {
+    level.value = 0;
+    points.value = 10;
+    moves.value = 0;
+    showWalls.value = true;
+
+    loadNextLevel();
+  }
+
   return {
-    init, reset, offset, draw, redraw, checkCollisions, add, move, loadNextLevel, loadEnd, showHelp, isHelpShown
+    init, reset, offset, draw, redraw, checkCollisions, add, move, loadNextLevel, loadEnd, showHelp, isHelpShown, resetGame
   }
 }
 
