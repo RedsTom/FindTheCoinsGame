@@ -258,18 +258,15 @@ const createGame = ({
     ball.x = 0;
     ball.y = 0;
 
-    resetGame();
     redraw();
 
     ctx.fillStyle = "#2C3A47";
     ctx.fillRect(0, 0, screen, screen);
 
     if(window.confirm(`Looks like your are dead ! ☠️`)) {
-      reset();
-      loadNextLevel();
+      resetGame();
     } else {
-      reset();
-      loadNextLevel();
+      resetGame();
     }
   }
 
