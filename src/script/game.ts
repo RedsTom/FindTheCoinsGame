@@ -1,5 +1,5 @@
-import levels from "./levels.json";
 import Ref from "./ref";
+import generateMaze from "./maze";
 
 interface Tile {
   x: number;
@@ -32,8 +32,7 @@ const createGame = ({
   showWalls: Ref<boolean>,
 }) => {
   const screen = 350;
-  const gridSize = 7;
-  const side = screen / gridSize;
+  let gridSize = 7, side = screen / gridSize;
 
   const ball: Tile = {
     x: 1,
@@ -126,7 +125,9 @@ const createGame = ({
         points.value = Math.max(0, points.value - 1);
         return false;
       } else {
-        points.value += Math.floor({yellow: 10, green: 5}[tile.color] - Math.log2(moves.value));
+        const pts = { yellow: 10, green: 5 }[tile.color];
+
+        points.value += Math.floor(pts - Math.log2((moves.value * pts/10) + 1));
         loadNextLevel();
 
         return false;
@@ -164,6 +165,52 @@ const createGame = ({
     moves.value = 0;
     board.length = 0;
 
+    gridSize = 7 + (Math.floor(level.value / 5) * 2);
+    side = screen / gridSize;
+
+    const generateLevel = (): number[][] => {
+      const level: number[][] = generateMaze(gridSize, gridSize);
+
+      const greenAmount = gridSize / 10;
+      const yellowAmount = gridSize / 20;
+
+      for (let i = 0; i < greenAmount; i++) {
+        do {
+          const x = Math.floor(Math.random() * gridSize);
+          const y = Math.floor(Math.random() * gridSize);
+
+          if (level[y][x] === 0) {
+            level[y][x] = 3;
+            break;
+          }
+        } while (true);
+      }
+
+      for (let i = 0; i < yellowAmount; i++) {
+        do {
+          const x = Math.floor(Math.random() * gridSize);
+          const y = Math.floor(Math.random() * gridSize);
+
+          if (level[y][x] === 0) {
+            level[y][x] = 4;
+            break;
+          }
+        } while (true);
+      }
+
+      do {
+        const x = Math.floor(Math.random() * gridSize);
+        const y = Math.floor(Math.random() * gridSize);
+
+        if (level[y][x] === 0) {
+          level[y][x] = 2;
+          break;
+        }
+      } while (true);
+
+      return level;
+    }
+
     const loadLevel = (lvl: number[][]) => {
       if (!lvl) {
         loadEnd();
@@ -196,10 +243,10 @@ const createGame = ({
       setTimeout(() => {
         showWalls.value = false;
         redraw();
-      }, 3000)
+      }, 3000 + (Math.floor(level.value / 5) * 1000));
     }
 
-    loadLevel(levels[level.value - 1]);
+    loadLevel(generateLevel());
   }
 
   const loadEnd = () => {
