@@ -165,7 +165,7 @@ const createGame = ({
     moves.value = 0;
     board.length = 0;
 
-    gridSize = 7 + (Math.floor(level.value / 5) * 2);
+    gridSize = 7 + (Math.floor(level.value / 5));
     side = screen / gridSize;
 
     const generateLevel = (): number[][] => {
@@ -243,7 +243,7 @@ const createGame = ({
       setTimeout(() => {
         showWalls.value = false;
         redraw();
-      }, 3000 + (Math.floor(level.value / 5) * 1000));
+      }, 3000 + (Math.floor(level.value / 5) * 2000));
     }
 
     loadLevel(generateLevel());
