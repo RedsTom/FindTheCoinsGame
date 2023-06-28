@@ -21,8 +21,8 @@ export default defineConfig({
                 theme_color: '#F8EFBA',
                 icons: [
                     {
-                        src: 'logo-31x31.png',
-                        sizes: '31x31',
+                        src: 'logo-32x32.png',
+                        sizes: '32x32',
                         type: 'image/png',
                     },
                     {
