@@ -2,6 +2,9 @@ import "./styles/style.scss";
 import Ref, {ref} from "./script/ref";
 import createGame from "./script/game";
 
+import { pwaInfo } from 'virtual:pwa-info';
+import { registerSW } from 'virtual:pwa-register'
+
 const canvas = document.querySelector<HTMLCanvasElement>("#canvas") as HTMLCanvasElement;
 const ctx: CanvasRenderingContext2D = canvas.getContext("2d") as CanvasRenderingContext2D;
 
@@ -63,6 +66,11 @@ helpButton?.addEventListener("click", () => {
 
   game.showHelp();
 })
+
+console.log("PWA Info", pwaInfo);
+if ('serviceWorker' in navigator) {
+  registerSW();
+}
 
 game.init();
 
